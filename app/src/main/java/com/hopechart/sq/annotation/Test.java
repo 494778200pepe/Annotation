@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
  * Created by wang on 2017/2/6.
  */
 
+@com.hopechart.sq.annotation.AptAnnotation
 public class Test {
     public static void main(String arg[]) {
         //获取 方法的注解
@@ -139,7 +140,7 @@ public class Test {
             System.out.println();
             //对方法 进行测试
             System.out.println("对方法进行测试");
-            Method method = clazz.getMethod("childMethod", null);
+            Method method = clazz.getMethod("childMethod", new Class[]{});
             if (method.isAnnotationPresent(InheritedTest.class)) {
                 System.out.println(method.getAnnotation(InheritedTest.class).value());
             }
@@ -149,7 +150,7 @@ public class Test {
             System.out.println();
             //对方法2 进行测试
             System.out.println("对方法2进行测试");
-            Method method2 = clazz.getMethod("parentMethod", null);
+            Method method2 = clazz.getMethod("parentMethod", new Class[]{});
             if (method2.isAnnotationPresent(InheritedTest.class)) {
                 System.out.println(method2.getAnnotation(InheritedTest.class).value());
             }

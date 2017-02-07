@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '24.0.1'
     defaultConfig {
         applicationId "com.hopechart.sq.annotation"
         minSdkVersion 16
@@ -25,5 +26,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24+'
+    apt project(':compiler')
     testCompile 'junit:junit:4.12'
+    compile project(path: ':annotation3')
 }
