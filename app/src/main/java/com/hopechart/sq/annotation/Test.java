@@ -14,6 +14,8 @@ import com.hopechart.sq.annotation.Demo4.Child;
 import com.hopechart.sq.annotation.Demo4.InheritedTest;
 import com.hopechart.sq.annotation.Demo4.NoneInheritedTest;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -34,6 +36,9 @@ public class Test {
         System.out.println("----------------------------分隔线---------------------------------");
         //测试 Inherited 和 Documented
         testDemo4();
+        System.out.println("----------------------------分隔线---------------------------------");
+        //测试 package-info.java的使用
+        testDemo5();
     }
 
     private static void testDemo1() {
@@ -57,7 +62,7 @@ public class Test {
             if (field.isAnnotationPresent(Name.class)) {
                 Name arg0 = field.getAnnotation(Name.class);
                 name = arg0.value();
-                System.out.println("name=" + name[0]+"、"+name[1]+"、"+name[2]);
+                System.out.println("name=" + name[0] + "、" + name[1] + "、" + name[2]);
             }
             if (field.isAnnotationPresent(Age.class)) {
                 Age arg0 = field.getAnnotation(Age.class);
@@ -176,4 +181,55 @@ public class Test {
             e.printStackTrace();
         }
     }
+
+    private static void testDemo5() {
+        //1、包注解的获取
+        //可以通过I/O操作或配置项获得包名
+        String pkgName = "com.hopechart.sq.annotation";
+        Package pkg = Package.getPackage(pkgName);
+        if (pkg != null && pkg.isAnnotationPresent(PkgAnnotation.class)) {
+            //获得包上的注解
+            Annotation[] annotations = pkg.getAnnotations();
+            //遍历注解数组
+            for (Annotation an : annotations) {
+                if (an instanceof PkgAnnotation) {
+                    System.out.println("Hi,I'm the PkgAnnotation ,which is be placed on package!");
+                /*
+                 * 注解操作
+                 * MyAnnotation myAnn = (PkgAnnotation)an;
+                 * 还可以操作该注解包下的所有类，比如初始化，检查等等
+                 * 类似Struts的@Namespace，可以放到包名上，标明一个包的namespace路径
+                 */
+                }
+            }
+        }
+
+        //2、测试友好类
+        PackageInfo packageInfo = new PackageInfo();
+        packageInfo.common();
+
+        //3、测试泛型
+        //泛型也能很好的工作，在pakcage-info.java里定义的类和普通类没什么区别
+        PackageInfoGeneric<Exception> packageInfoGeneric = new PackageInfoGeneric<Exception>();
+        packageInfoGeneric.set(new IOException("device io"));
+        packageInfoGeneric.common();
+
+        //4、测试接口
+        Sub sub = new Sub();
+        sub.test();
+
+        //5、测试常量
+        System.out.println(PackageConstants.ERROE_CODE);
+
+    }
+
+}
+
+class Sub implements packageInfoInteger {
+
+    @Override
+    public void test() {
+        System.out.println("测试接口");
+    }
+
 }
