@@ -2,6 +2,7 @@ package com.example;
 
 
 import com.google.auto.service.AutoService;
+import com.hopechart.sq.annotation.AptAnnotation;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -16,9 +17,6 @@ import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 
-
-import com.hopechart.sq.annotation.AptAnnotation;
-
 /**
  * Created by wang on 2017/2/7.
  */
@@ -26,6 +24,7 @@ import com.hopechart.sq.annotation.AptAnnotation;
 public class AptProcessor extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
+        // 规定需要处理的注解
         return Collections.singleton(AptAnnotation.class.getCanonicalName());
     }
     @Override
