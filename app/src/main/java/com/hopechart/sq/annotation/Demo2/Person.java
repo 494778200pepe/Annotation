@@ -6,7 +6,7 @@ package com.hopechart.sq.annotation.Demo2;
 public class Person {
 
     @Age(22)
-    @Name("阿特罗伯斯")
+    @Name({"阿特罗伯斯","米开朗基罗","达芬奇"})
     private String name;
 
     @Gender(gender = Gender.GenderType.Male)

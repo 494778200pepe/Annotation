@@ -14,12 +14,13 @@ public class ParseAnnotation {
         Object obj = clazz.getConstructor(new Class[]{}).newInstance(new Object[]{});
         for (Method method : clazz.getDeclaredMethods()) {
             HelloWorld say = method.getAnnotation(HelloWorld.class);
-            String name = "";
+            String name ;
             if (say != null) {
                 name = say.name();
                 method.invoke(obj, name);
             }
             Yts yts = method.getAnnotation(Yts.class);
+            //有默认值  YtsType.util
             if (yts != null) {
                 if (Yts.YtsType.util.equals(yts.classType())) {
                     System.out.println("this is a util method");
@@ -32,8 +33,16 @@ public class ParseAnnotation {
 
     @SuppressWarnings("unchecked")
     public void parseType(Class clazz) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-        Yts yts = (Yts) clazz.getAnnotation(Yts.class);
-        if (yts != null) {
+//        Yts yts = (Yts) clazz.getAnnotation(Yts.class);
+//        if (yts != null) {
+//            if (Yts.YtsType.util.equals(yts.classType())) {
+//                System.out.println("this is a util class");
+//            } else {
+//                System.out.println("this is a other class");
+//            }
+//        }
+        if(clazz.isAnnotationPresent(Yts.class)){
+            Yts yts = (Yts) clazz.getAnnotation(Yts.class);
             if (Yts.YtsType.util.equals(yts.classType())) {
                 System.out.println("this is a util class");
             } else {

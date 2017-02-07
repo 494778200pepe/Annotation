@@ -5,7 +5,7 @@ package com.hopechart.sq.annotation.Demo3;
  */
 
 @Yts(classType = Yts.YtsType.util)
-public class SayHell {
+public class SayHello {
 
     @HelloWorld(name = " 小明 ")
     @Yts
